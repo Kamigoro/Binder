@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="ProgramFlow\" />
-    <Folder Include="States\" />
   </ItemGroup>
 
 </Project>
