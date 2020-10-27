@@ -74,7 +74,7 @@ namespace Sensy.Binder.Domain.Devices
         /// <summary>
         /// Execute the python script controlling the chamber with specified parameters and force the command.
         /// </summary>
-        /// <param name="parameters">Tmperature or humidity percentage.</param>
+        /// <param name="parameters">Temperature or humidity percentage.</param>
         /// <returns></returns>
         private async Task ExecutePythonCommand(string parameters)
         {
