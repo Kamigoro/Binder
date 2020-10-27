@@ -1,4 +1,5 @@
-﻿using Sensy.Binder.Domain.Devices.Data;
+﻿using Newtonsoft.Json;
+using Sensy.Binder.Domain.Devices.Data;
 using Sensy.Binder.Domain.Devices.Enums;
 using System;
 using System.Collections.Generic;
@@ -67,8 +68,8 @@ namespace Sensy.Binder.Domain.Devices
 
         public async Task<ChamberData> GetChamberDataAsync()
         {
-            // TODO Implement chamber data retrieving
-            throw new NotImplementedException();
+            string chamberDataJsonString = await ExecutePythonCommand("-Q");
+            return JsonConvert.DeserializeObject<ChamberData>(chamberDataJsonString);
         }
 
         /// <summary>
@@ -76,8 +77,9 @@ namespace Sensy.Binder.Domain.Devices
         /// </summary>
         /// <param name="parameters">Temperature or humidity percentage.</param>
         /// <returns></returns>
-        private async Task ExecutePythonCommand(string parameters)
+        private async Task<string> ExecutePythonCommand(string parameters)
         {
+            string commandLineOutput = null;
             await Task.Run(() =>
             {
                 Process process = new Process();
@@ -85,9 +87,12 @@ namespace Sensy.Binder.Domain.Devices
                 startInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 startInfo.FileName = "python";
                 startInfo.Arguments = $"{Settings.PythonScriptPath} -A {IPAddress} {parameters} -f";
+                startInfo.RedirectStandardOutput = true;
                 process.StartInfo = startInfo;
                 process.Start();
+                commandLineOutput = process.StandardOutput.ReadToEnd();
             });
+            return commandLineOutput;
         }
 
     }

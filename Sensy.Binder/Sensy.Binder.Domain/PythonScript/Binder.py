@@ -115,6 +115,10 @@ MB_ENAMES = {
 #  Current temperature
 #   techspec 2.11.7: Process value 1, float, R/O, temperature
 OVENADDR_CURTEMP    = 0x11a9
+
+#Current humidity
+OVENADDR_CURHUMID	= 0x11CD
+
 #  Current set point
 #   techspec 2.11.7: Set point 1, float, R/O, temperature
 OVENADDR_SETPOINT   = 0x1077
@@ -632,6 +636,9 @@ class OvenCtl(object):
         Can raise: ModbusException"""
         return self.read_float(OVENADDR_CURTEMP)
 
+    def get_humid(self):
+    	return self.read_float(OVENADDR_CURHUMID)
+
     def get_setpoint(self):
         """Get the oven's temperature setpoint, as a float, in degrees Celsius
 
@@ -1012,7 +1019,46 @@ if __name__ == '__main__':
 
     try:
         if options.query:
-            Query()
+            try:
+                alarm, note = oven.get_alarm_state()
+                if alarm:
+                    try:
+                        print "ALARM: %s" % oven.get_alarm_text().strip()
+                    except ModbusException as err:
+                        print "Failed to get alarm text: %s" % err
+                elif note:
+                    try:
+                        print "{\n\t\"Note\": \"%s\"," % oven.get_alarm_text().strip()
+                    except ModbusException as err:
+                        print "Failed to get note text: %s" % err
+            except ModbusException as err:
+                print "Failed to get alarm state: %s" % err
+            try:
+                mode,modes = oven.get_mode()
+                print "\t\"Mode\": \"%s\"," % ('&'.join(modes))
+            except ModbusException as err:
+                print "Failed to get oven mode: %s" % err
+            try:
+                if oven.bedew_protection:
+                    print "Bedew protection active"
+            except ModbusException as err:
+                print "Failed to get bedew operation status: %s" % err
+            try:
+                print "\t\"Door\": \"%s\"," % ("open" if oven.get_door_state() else "closed")
+            except ModbusException as err:
+                print "Failed to get door state: %s" % err
+            try:
+                print "\t\"Humidity\": %.2f," % (oven.get_humid(),)
+            except ModbusException as err:
+                print "Failed to get oven humidity %s" % err 
+            try:
+                print "\t\"Temperature\": %.2f," % (oven.get_temp(),)
+            except ModbusException as err:
+                print "Failed to get oven temperature: %s" % err
+            try:
+                print "\t\"TargetTemperature\": %.2f \n}" % (oven.get_setpoint(),)
+            except ModbusException as err:
+                print "Failed to get oven setpoint: %s" % err
         elif options.idle:
             try:
                 oven.set_mode_idle()
