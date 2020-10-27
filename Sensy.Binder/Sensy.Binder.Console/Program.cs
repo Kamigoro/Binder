@@ -11,8 +11,8 @@ namespace Sensy.Binder
         static async System.Threading.Tasks.Task Main(string[] args)
         {
             Settings.PythonScriptPath = @"PythonScript/Binder.py";
-            IChamberDevice binder = new Domain.Devices.Binder("192.168.0.50");
-            var result = await binder.GetChamberDataAsync();
+            IChamberDevice climatronix = new Climatronix("192.168.0.50");
+            var result = await climatronix.GetChamberDataAsync();
             Console.WriteLine(result.Note);
             Console.WriteLine(result.Mode);
             Console.WriteLine(result.Door);

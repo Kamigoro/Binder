@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Sensy.Binder.Domain.Devices
 {
-    public class Binder : IChamberDevice
+    public class Climatronix : IChamberDevice
     {
         public string IPAddress { get; set; }
         private const int MaximumTemperature = 180;
@@ -18,7 +18,7 @@ namespace Sensy.Binder.Domain.Devices
         private const int MaximumHumidity = 100;
         private const int MinimumHumidity = 0;
 
-        public Binder(string ipAddress)
+        public Climatronix(string ipAddress)
         {
             IPAddress = ipAddress;
         }
