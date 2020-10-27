@@ -12,10 +12,10 @@ namespace Sensy.Binder.Domain.Devices
     public class Binder : IChamberDevice
     {
         public string IPAddress { get; set; }
-        private const double MaximumTemperature = 180;
-        private const double MinimumTemperature = -40;
-        private const double MaximumHumidity = 100;
-        private const double MinimumHumidity = 0;
+        private const int MaximumTemperature = 180;
+        private const int MinimumTemperature = -40;
+        private const int MaximumHumidity = 100;
+        private const int MinimumHumidity = 0;
 
         public Binder(string ipAddress)
         {
@@ -41,11 +41,11 @@ namespace Sensy.Binder.Domain.Devices
             await ExecutePythonCommand("-I");
         }
 
-        public async Task SetHumidityAsync(double humidity)
+        public async Task SetHumidityAsync(int humidity)
         {
             if (humidity <= MaximumHumidity && humidity >= MinimumHumidity)
             {
-                await ExecutePythonCommand($"-H {humidity.ToString("0.0###")}");
+                await ExecutePythonCommand($"-H {humidity}");
             }
             else
             {
@@ -53,11 +53,11 @@ namespace Sensy.Binder.Domain.Devices
             }
         }
 
-        public async Task SetTemperatureAsync(double temperature)
+        public async Task SetTemperatureAsync(int temperature)
         {
             if (temperature <= MaximumTemperature && temperature >= MinimumTemperature)
             {
-                await ExecutePythonCommand($"-T {temperature.ToString("0.0###")}");
+                await ExecutePythonCommand($"-T {temperature}");
             }
             else
             {
@@ -83,8 +83,8 @@ namespace Sensy.Binder.Domain.Devices
                 Process process = new Process();
                 ProcessStartInfo startInfo = new ProcessStartInfo();
                 startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                startInfo.FileName = "cmd.exe";
-                startInfo.Arguments = $"/C python {Settings.PythonScriptPath} -A {IPAddress} {parameters} -f";
+                startInfo.FileName = "python";
+                startInfo.Arguments = $"{Settings.PythonScriptPath} -A {IPAddress} {parameters} -f";
                 process.StartInfo = startInfo;
                 process.Start();
             });

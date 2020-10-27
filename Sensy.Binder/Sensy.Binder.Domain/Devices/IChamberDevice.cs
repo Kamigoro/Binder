@@ -14,14 +14,14 @@ namespace Sensy.Binder.Domain.Devices
         /// </summary>
         /// <param name="temperature"></param>
         /// <returns></returns>
-        Task SetTemperatureAsync(double temperature);
+        Task SetTemperatureAsync(int temperature);
         /// <summary>
         /// Set the humidity percentage of the chamber asynchronously. 
         /// <para>The value is checked to be fitting the chamber maximum and minimum.</para>
         /// </summary>
         /// <param name="humidity"></param>
         /// <returns></returns>
-        Task SetHumidityAsync(double humidity);
+        Task SetHumidityAsync(int humidity);
         /// <summary>
         /// Set the chamber in idle mode, so that it erases previous commands.
         /// </summary>
