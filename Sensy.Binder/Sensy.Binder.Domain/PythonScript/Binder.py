@@ -1,3 +1,4 @@
+#This file has been modified by Dylan Piette to be able to Query the Binder and send back a json object
 #! /usr/bin/env python
 #
 # Copyright Solarflare Communications Inc., 2012-13
