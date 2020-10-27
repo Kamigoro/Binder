@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensy.Binder.Domain", "Sensy.Binder.Domain\Sensy.Binder.Domain.csproj", "{E6817B91-5E60-423A-8E47-6B5CEB97EC4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sensy.Binder.Domain", "Sensy.Binder.Domain\Sensy.Binder.Domain.csproj", "{E6817B91-5E60-423A-8E47-6B5CEB97EC4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensy.Binder.WPF", "Sensy.Binder.WPF\Sensy.Binder.WPF.csproj", "{39556E46-17AD-4D0A-ABB0-03D3366BEC39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sensy.Binder.WPF", "Sensy.Binder.WPF\Sensy.Binder.WPF.csproj", "{39556E46-17AD-4D0A-ABB0-03D3366BEC39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensy.Binder.Console", "Sensy.Binder.Console\Sensy.Binder.Console.csproj", "{83528265-6E32-4073-B714-1962B6621522}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{39556E46-17AD-4D0A-ABB0-03D3366BEC39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39556E46-17AD-4D0A-ABB0-03D3366BEC39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39556E46-17AD-4D0A-ABB0-03D3366BEC39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83528265-6E32-4073-B714-1962B6621522}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83528265-6E32-4073-B714-1962B6621522}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83528265-6E32-4073-B714-1962B6621522}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83528265-6E32-4073-B714-1962B6621522}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
