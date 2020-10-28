@@ -1,4 +1,8 @@
-#This file has been modified by Dylan Piette to be able to Query the Binder and send back a json object
+#This script has been updated by Piette Dylan for personnal needs
+#-Doesn't query useless info
+#-Querying humidity percentage
+#-Setting humidity percentage
+#-Sending back a json object to be able to deserialize it
 #! /usr/bin/env python
 #
 # Copyright Solarflare Communications Inc., 2012-13
@@ -932,44 +936,6 @@ def parse_cmdline():
 
     return options
 
-    def Query(self):
-        try:
-            alarm, note = oven.get_alarm_state()
-            if alarm:
-                try:
-                    print "ALARM: %s" % oven.get_alarm_text().strip()
-                except ModbusException as err:
-                    print "Failed to get alarm text: %s" % err
-            elif note:
-                try:
-                    print "Note: %s" % oven.get_alarm_text().strip()
-                except ModbusException as err:
-                    print "Failed to get note text: %s" % err
-        except ModbusException as err:
-            print "Failed to get alarm state: %s" % err
-        try:
-            mode,modes = oven.get_mode()
-            print "Mode: %04x (%s)" % (mode, '&'.join(modes))
-        except ModbusException as err:
-            print "Failed to get oven mode: %s" % err
-        try:
-            if oven.bedew_protection:
-                print "Bedew protection active"
-        except ModbusException as err:
-            print "Failed to get bedew operation status: %s" % err
-        try:
-            print "Door: %s" % ("open" if oven.get_door_state() else "closed")
-        except ModbusException as err:
-            print "Failed to get door state: %s" % err
-        try:
-            print "Temperature: %.2f" % (oven.get_temp(),)
-        except ModbusException as err:
-            print "Failed to get oven temperature: %s" % err
-        try:
-            print "Target temperature: %.2f" % (oven.get_setpoint(),)
-        except ModbusException as err:
-            print "Failed to get oven setpoint: %s" % err
-
     def setTemperature(self,temperature, force = false):
         try:
             try:
@@ -1021,35 +987,7 @@ if __name__ == '__main__':
     try:
         if options.query:
             try:
-                alarm, note = oven.get_alarm_state()
-                if alarm:
-                    try:
-                        print "ALARM: %s" % oven.get_alarm_text().strip()
-                    except ModbusException as err:
-                        print "Failed to get alarm text: %s" % err
-                elif note:
-                    try:
-                        print "{\n\t\"Note\": \"%s\"," % oven.get_alarm_text().strip()
-                    except ModbusException as err:
-                        print "Failed to get note text: %s" % err
-            except ModbusException as err:
-                print "Failed to get alarm state: %s" % err
-            try:
-                mode,modes = oven.get_mode()
-                print "\t\"Mode\": \"%s\"," % ('&'.join(modes))
-            except ModbusException as err:
-                print "Failed to get oven mode: %s" % err
-            try:
-                if oven.bedew_protection:
-                    print "Bedew protection active"
-            except ModbusException as err:
-                print "Failed to get bedew operation status: %s" % err
-            try:
-                print "\t\"Door\": \"%s\"," % ("open" if oven.get_door_state() else "closed")
-            except ModbusException as err:
-                print "Failed to get door state: %s" % err
-            try:
-                print "\t\"Humidity\": %.2f," % (oven.get_humid(),)
+                print "{\n\t\"Humidity\": %.2f," % (oven.get_humid(),)
             except ModbusException as err:
                 print "Failed to get oven humidity %s" % err 
             try:
