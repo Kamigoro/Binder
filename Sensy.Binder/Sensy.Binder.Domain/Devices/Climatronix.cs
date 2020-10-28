@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Sensy.Binder.Domain.Devices.CustomException;
 using Sensy.Binder.Domain.Devices.Data;
 using Sensy.Binder.Domain.Devices.Enums;
 using System;
@@ -39,14 +40,28 @@ namespace Sensy.Binder.Domain.Devices
 
         public async Task SetIdleAsync()
         {
-            await ExecutePythonCommand("-I");
+            if (await IsConnectedAsync() == DeviceStatus.Connected)
+            {
+                await ExecutePythonCommand("-I");
+            }
+            else
+            {
+                throw new DeviceNotConnectedException("Couldn't set in idle mode because device is not reachable", "Climatronix");
+            }
         }
 
         public async Task SetHumidityAsync(int humidity)
         {
             if (humidity <= MaximumHumidity && humidity >= MinimumHumidity)
             {
-                await ExecutePythonCommand($"-H {humidity}");
+                if (await IsConnectedAsync() == DeviceStatus.Connected)
+                {
+                    await ExecutePythonCommand($"-H {humidity}");
+                }
+                else
+                {
+                    throw new DeviceNotConnectedException("Couldn't set humidity because device is not reachable", "Climatronix");
+                }
             }
             else
             {
@@ -58,7 +73,14 @@ namespace Sensy.Binder.Domain.Devices
         {
             if (temperature <= MaximumTemperature && temperature >= MinimumTemperature)
             {
-                await ExecutePythonCommand($"-T {temperature}");
+                if (await IsConnectedAsync() == DeviceStatus.Connected)
+                {
+                    await ExecutePythonCommand($"-T {temperature}");
+                }
+                else
+                {
+                    throw new DeviceNotConnectedException("Couldn't set temperature because device is not reachable", "Climatronix");
+                }
             }
             else
             {
@@ -68,8 +90,15 @@ namespace Sensy.Binder.Domain.Devices
 
         public async Task<ChamberData> GetChamberDataAsync()
         {
-            string chamberDataJsonString = await ExecutePythonCommand("-Q");
-            return JsonConvert.DeserializeObject<ChamberData>(chamberDataJsonString);
+            if (await IsConnectedAsync() == DeviceStatus.Connected)
+            {
+                string chamberDataJsonString = await ExecutePythonCommand("-Q");
+                return JsonConvert.DeserializeObject<ChamberData>(chamberDataJsonString);
+            }
+            else
+            {
+                throw new DeviceNotConnectedException("Couldn't get chamber data beacause device is not reachable", "Climatronix");
+            }
         }
 
         /// <summary>
