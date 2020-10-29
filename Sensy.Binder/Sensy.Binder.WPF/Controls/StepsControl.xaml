@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="Sensy.Binder.WPF.Controls.StepsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Sensy.Binder.WPF.Controls"
+             mc:Ignorable="d" 
+             Height="200">
+    
+    <DataGrid ItemsSource="{Binding Steps}"
+              AutoGenerateColumns="False"
+              CanUserAddRows="False">
+        <DataGrid.Columns>
+            <DataGridTextColumn Header="Numéro" Binding="{Binding Number}"/>
+            <DataGridTextColumn Header="Température" Binding="{Binding Temperature}"/>
+            <DataGridTextColumn Header="Humidité" Binding="{Binding Humidity}"/>
+            <DataGridTextColumn Header="Stabilisation" Binding="{Binding Stabilisation}"/>
+        </DataGrid.Columns>
+    </DataGrid>
+    
+</UserControl>
