@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sensy.Binder.Domain.ProgramFlow;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,7 +7,13 @@ namespace Sensy.Binder.Domain.States
 {
     public class ConnexionCheckState : IState
     {
-        public string DisplayName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Cycle Cycle { get; set; }
+        public string DisplayName { get; set; } = "Vérification connexion";
+
+        public ConnexionCheckState(Cycle cycle)
+        {
+            Cycle = cycle;
+        }
 
         public void Run()
         {

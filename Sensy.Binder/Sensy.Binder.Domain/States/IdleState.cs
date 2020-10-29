@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sensy.Binder.Domain.ProgramFlow;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,7 +7,14 @@ namespace Sensy.Binder.Domain.States
 {
     public class IdleState : IState
     {
-        public string DisplayName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public Cycle Cycle { get; set; }
+        public string DisplayName { get; set; } = "Etat initial";
+
+        public IdleState(Cycle cycle)
+        {
+            Cycle = cycle;
+        }
 
         public void Run()
         {

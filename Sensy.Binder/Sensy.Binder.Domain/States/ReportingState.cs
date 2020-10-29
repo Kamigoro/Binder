@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sensy.Binder.Domain.ProgramFlow;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,7 +7,13 @@ namespace Sensy.Binder.Domain.States
 {
     public class ReportingState : IState
     {
-        public string DisplayName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string DisplayName { get; set; } = "Création du rapport";
+        public Cycle Cycle { get; set; }
+
+        public ReportingState(Cycle cycle)
+        {
+            Cycle = cycle;
+        }
 
         public void Run()
         {
