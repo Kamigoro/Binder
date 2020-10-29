@@ -14,7 +14,13 @@ namespace Sensy.Binder.Domain.ProgramFlow
 
         public Cycle()
         {
-            CurrentState = new IdleState(this);
+            CurrentState = new IdleState() { Cycle = this };
+        }
+
+        public void ChangeState(IState newState)
+        {
+            newState.Cycle = this;
+            this.CurrentState = newState;
         }
     }
 }

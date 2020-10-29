@@ -7,17 +7,12 @@ namespace Sensy.Binder.Domain.States
 {
     public class ReportingState : IState
     {
-        public string DisplayName { get; set; } = "Création du rapport";
         public Cycle Cycle { get; set; }
-
-        public ReportingState(Cycle cycle)
-        {
-            Cycle = cycle;
-        }
 
         public void Run()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Running reporting state");
+            Cycle.ChangeState(new IdleState());
         }
 
         public void Stop()

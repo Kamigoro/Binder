@@ -7,17 +7,18 @@ namespace Sensy.Binder.Domain.States
 {
     public class StabilisationState : IState
     {
-        public string DisplayName { get; set; } = "Stabilisation";
         public Cycle Cycle { get; set; }
+        public int MinuteToWait { get; set; }
 
-        public StabilisationState(Cycle cycle)
+        public StabilisationState(int minuteToWait)
         {
-            Cycle = cycle;
+            MinuteToWait = minuteToWait;
         }
 
         public void Run()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Running StabilisationState");
+            Console.WriteLine($"\tWaiting : {MinuteToWait}mn");
         }
 
         public void Stop()

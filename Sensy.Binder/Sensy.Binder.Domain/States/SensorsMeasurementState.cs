@@ -7,17 +7,21 @@ namespace Sensy.Binder.Domain.States
 {
     public class SensorsMeasurementState : IState
     {
-        public string DisplayName { get; set; } = "Mesure des capteurs";
         public Cycle Cycle { get; set; }
+        public List<Sensor> Sensors { get; set; }
 
-        public SensorsMeasurementState(Cycle cycle)
+        public SensorsMeasurementState(List<Sensor> sensors)
         {
-            Cycle = cycle;
+            Sensors = sensors;
         }
 
         public void Run()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Running SensorMeasurementState");
+            foreach (Sensor sensor in Sensors)
+            {
+                Console.WriteLine($"\tMesure du capteur : {sensor.SerialNumber} sur le canal {sensor.MeasurementChannel}");
+            }
         }
 
         public void Stop()

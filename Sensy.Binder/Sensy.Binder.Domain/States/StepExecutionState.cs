@@ -7,17 +7,19 @@ namespace Sensy.Binder.Domain.States
 {
     public class StepExecutionState : IState
     {
-        public string DisplayName { get; set; } = "Exécution d'étape";
         public Cycle Cycle { get; set; }
-
-        public StepExecutionState(Cycle cycle)
-        {
-            Cycle = cycle;
-        }
 
         public void Run()
         {
-            throw new NotImplementedException();
+            foreach (Step step in Cycle.Steps)
+            {
+                Console.WriteLine("Running step");
+                Console.WriteLine($"\tSending command to Chamber\n\tTemperature : {step.Temperature}\n\tHumidity : {step.Humidity}");
+                new StabilisationState(step.StabilisationTime).Run();
+                new SensorsMeasurementState(Cycle.Sensors).Run();
+            }
+            Cycle.ChangeState(new ReportingState());
+            Cycle.CurrentState.Run();
         }
 
         public void Stop()

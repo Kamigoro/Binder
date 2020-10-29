@@ -22,5 +22,11 @@ namespace Sensy.Binder.Domain.ProgramFlow
         /// The time in minutes to wait before taking measure after hitting the desired temperature.
         /// </summary>
         public int StabilisationTime { get; set; }
+
+
+        public override string ToString()
+        {
+            return $"Etape {Number}\nTempérature : {Temperature}\nHumidité : {Humidity}\nTemps de stabilisation : {StabilisationTime}mn";
+        }
     }
 }

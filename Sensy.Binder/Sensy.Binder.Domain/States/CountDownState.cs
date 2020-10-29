@@ -7,17 +7,13 @@ namespace Sensy.Binder.Domain.States
 {
     public class CountDownState : IState
     {
-        public string DisplayName { get; set; } = "Attente de l'heure de départ";
         public Cycle Cycle { get; set; }
-
-        public CountDownState(Cycle cycle)
-        {
-            Cycle = cycle;
-        }
 
         public void Run()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Running CountDownState");
+            Cycle.ChangeState(new StepExecutionState());
+            Cycle.CurrentState.Run();
         }
 
         public void Stop()

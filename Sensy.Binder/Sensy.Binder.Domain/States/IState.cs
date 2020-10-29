@@ -7,7 +7,6 @@ namespace Sensy.Binder.Domain.States
 {
     public interface IState
     {
-        public string DisplayName { get; set; }
         public Cycle Cycle { get; set; }
         void Run();
         void Stop();

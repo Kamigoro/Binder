@@ -9,16 +9,12 @@ namespace Sensy.Binder.Domain.States
     {
 
         public Cycle Cycle { get; set; }
-        public string DisplayName { get; set; } = "Etat initial";
-
-        public IdleState(Cycle cycle)
-        {
-            Cycle = cycle;
-        }
 
         public void Run()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Running Idle state");
+            Cycle.ChangeState(new ConnexionCheckState());
+            Cycle.CurrentState.Run();
         }
 
         public void Stop()
